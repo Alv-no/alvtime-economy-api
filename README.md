@@ -1,6 +1,6 @@
 # alvtime-economy-api
 
-![](https://github.com/Alv-no/alvtime-economy-api/workflows/CI / CD/badge.svg)
+![](https://github.com/Alv-no/alvtime-economy-api/workflows/CI/badge.svg)
 
 For å deploye til google apps:
 gcloud auth login
