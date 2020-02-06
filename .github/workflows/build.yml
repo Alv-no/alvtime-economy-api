@@ -8,8 +8,35 @@ on:
       - '.gitignore'
       - 'LICENCE'
     branches:
+      master
+env:
+  ZONE: eu-west
+  IMAGE: static-site
 
 jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '270.0.0'
+          service_account_email: ${{ secrets.SA_EMAIL }}
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Deploy code
+        run: |
+          gcloud config set project alvtime-economy-api
+          ./gradlew appengineDeploy
+
   test:
     name: Check Code
     runs-on: ubuntu-latest
